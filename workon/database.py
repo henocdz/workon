@@ -1,10 +1,14 @@
 import datetime
+import os
 
 from peewee import Model, CharField, TextField, DateTimeField
 from playhouse.sqlite_ext import SqliteExtDatabase
 
+from helpers import get_project_path
 
-db = SqliteExtDatabase('workon.db')
+
+db_path = os.path.join(get_project_path(), 'workon.db')
+db = SqliteExtDatabase(db_path)
 
 class BaseModel(Model):
     class Meta:

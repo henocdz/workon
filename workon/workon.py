@@ -6,8 +6,7 @@ import fire
 
 from peewee import IntegrityError
 
-from database import setup, Project
-from helpers import query_yes_no
+from database import db_path, setup, Project
 
 
 class WorkOn(object):
@@ -73,12 +72,12 @@ class WorkOn(object):
             self._print('You can add it running: work add {0}'.format(name), 'cyan')
             return None
 
-    def add(self, name, path=None):
+    def add(self, name, path=None, **kwargs):
         """add new project with given name and path to database
         if the path is not given, current working directory will be taken
         ...as default
         """
-        path = path or os.getcwd()
+        path = path or kwargs.pop('default_path', None)
 
         if not self._path_is_valid(path):
             return
@@ -94,44 +93,40 @@ class WorkOn(object):
         Project.create(name=name, path=path)
         self._print(self._SUCCESS_PROJECT_ADDED.format(name), 'green')
 
-    def list(self):
+    def list(self, **kwargs):
         """displays all projects on database
         """
         projects = Project.select().order_by(Project.name)
+        if len(projects) == 0:
+            self._print('No projects available', 'yellow')
+            return
+
         for project in projects:
             print('- ', self._PROJECT_ITEM.format(project.name, project.path))
 
-    def on(self, name):
+    def on(self, name, **kwargs):
         project = self._get_project_by_name(name)
         if not project:
             return
-        # working on this to cd...
-        print('cd ' + project.path)
+        sys.stdout.write(project.path)
 
-    def rm(self, name):
+    def rm(self, name, **kwargs):
         project = self._get_project_by_name(name)
         if not project:
             return
 
-        question_str = 'Are you sure to delete project "{}"? '.format(name)
-        delete_it = query_yes_no(question_str, default='no')
+        project.delete_instance()
+        self._print('Project {} deleted'.format(name), 'green')
 
-        if delete_it:
-            project.delete_instance()
-            self._print('Project {} deleted'.format(name), 'green')
-
-    def reset(self):
-        delete_them = query_yes_no('Are you sure to delete all projects?', default='no')
-
-        if delete_them:
-            Project.delete().execute()
-            self._print('All projects have been deleted', 'green')
+    def reset(self, **kwargs):
+        Project.delete().execute()
+        self._print('All projects have been deleted', 'green')
 
 
 def main():
     fire.Fire(WorkOn)
 
 if __name__ == '__main__':
-    if not os.path.exists('./workon.db'):
+    if not os.path.exists(db_path):
         setup()
     main()
