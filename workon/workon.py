@@ -124,9 +124,9 @@ class WorkOn(object):
 
 
 def main():
+    if not os.path.exists(db_path):
+        setup()
     fire.Fire(WorkOn)
 
 if __name__ == '__main__':
-    if not os.path.exists(db_path):
-        setup()
     main()
