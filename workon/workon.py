@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 import os
+import sys
 
 import fire
 
 from peewee import IntegrityError
 
 from database import setup, Project
+from helpers import query_yes_no
 
 
 class WorkOn(object):
@@ -63,6 +65,14 @@ class WorkOn(object):
                 return
         return True
 
+    def _get_project_by_name(self, name):
+        try:
+            return Project.get(Project.name == name)
+        except:
+            self._print('Project "{0}" doesn\'t exist.'.format(name), 'red')
+            self._print('You can add it running: work add {0}'.format(name), 'cyan')
+            return None
+
     def add(self, name, path=None):
         """add new project with given name and path to database
         if the path is not given, current working directory will be taken
@@ -82,7 +92,7 @@ class WorkOn(object):
             return
 
         Project.create(name=name, path=path)
-        self._print_success(self._SUCCESS_PROJECT_ADDED.format(name))
+        self._print(self._SUCCESS_PROJECT_ADDED.format(name), 'green')
 
     def list(self):
         """displays all projects on database
@@ -91,17 +101,31 @@ class WorkOn(object):
         for project in projects:
             print('- ', self._PROJECT_ITEM.format(project.name, project.path))
 
-    def mv(self, name):
-        pass
-
     def on(self, name):
-        pass
+        project = self._get_project_by_name(name)
+        if not project:
+            return
+        # working on this to cd...
+        print('cd ' + project.path)
 
     def rm(self, name):
-        pass
+        project = self._get_project_by_name(name)
+        if not project:
+            return
 
-    def reset(self, name):
-        pass
+        question_str = 'Are you sure to delete project "{}"? '.format(name)
+        delete_it = query_yes_no(question_str, default='no')
+
+        if delete_it:
+            project.delete_instance()
+            self._print('Project {} deleted'.format(name), 'green')
+
+    def reset(self):
+        delete_them = query_yes_no('Are you sure to delete all projects?', default='no')
+
+        if delete_them:
+            Project.delete().execute()
+            self._print('All projects have been deleted', 'green')
 
 
 def main():
