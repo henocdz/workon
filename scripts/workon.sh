@@ -24,7 +24,7 @@ function work {
 
     output=$(\
         command \cd ~ && \
-        "$PYTHON_EXEC" -m "workon.workon" "$@" --default_path="$cwd" \
+        "$PYTHON_EXEC" -m "workon.script" "$@" --default_path="$cwd" \
     )
     result=$?
 
@@ -39,7 +39,7 @@ function work {
         cat - 1>&2 <<EOF
 workon.sh: There was a problem running program.
 
-If Python could not import the module workon.main,
+If Python could not import the module workon.script,
 check that workon has been installed with -- pip install workon
 EOF
     fi

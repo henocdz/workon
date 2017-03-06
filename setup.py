@@ -2,12 +2,12 @@ from setuptools import setup
 
 setup(
     name='Workon',
-    version='0.7.1',
+    version='0.8.0',
     description='Switch between projects quickly from command line',
     long_description='...',
     keywords='terminal side projects manager work cli',
     url='https://github.com/henocdz/workon',
-    download_url = 'https://github.com/henocdz/workon/tarball/0.7.1',
+    download_url = 'https://github.com/henocdz/workon/tarball/0.8.0',
     author='henocdz',
     author_email='self@henocdz.com',
     license='MIT',
