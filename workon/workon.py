@@ -3,6 +3,7 @@ import os
 import sys
 
 import fire
+import six
 
 from peewee import IntegrityError
 
@@ -28,7 +29,7 @@ class WorkOn(object):
             'cyan': '\033[96m{}\033[00m'
         }
         _ = COLORS[color]
-        print(_.format(text), **kwargs)
+        six.print_(_.format(text), **kwargs)
 
     def _is_unique(self, name, path):
         """verify if there is a project with given name or path
