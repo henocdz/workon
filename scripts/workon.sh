@@ -4,7 +4,7 @@
 PYTHON_EXEC="$(command \which python)"
 
 # from: https://bitbucket.org/virtualenvwrapper/virtualenvwrapper/src/cee707f128e39623718568b47b6038e8d62c5f34/virtualenvwrapper.sh?at=master&fileviewer=file-view-default#virtualenvwrapper.sh-99
-function _cd {
+function workon_cd {
     if [ -n "$BASH" ]
     then
         builtin \cd "$@"
@@ -30,7 +30,7 @@ function work {
 
     if [ $result -eq 0 ]; then
         if [ -d "$output" ]; then
-            _cd $output
+            workon_cd $output
         else
             echo "$output"
         fi
