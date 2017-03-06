@@ -12,7 +12,8 @@ setup(
     author_email='self@henocdz.com',
     license='MIT',
     packages=['workon'],
-    install_requires=['peewee==2.8.8'],
+    scripts=['scripts/work'],
+    install_requires=['peewee==2.8.8', 'fire==0.1.0'],
     classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
