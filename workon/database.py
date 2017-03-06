@@ -4,7 +4,7 @@ import os
 from peewee import Model, CharField, TextField, DateTimeField
 from playhouse.sqlite_ext import SqliteExtDatabase
 
-from .helpers import get_project_path
+from workon.helpers import get_project_path
 
 
 db_path = os.path.join(get_project_path(), 'workon.db')

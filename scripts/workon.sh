@@ -24,7 +24,7 @@ function work {
 
     output=$(\
         command \cd ~ && \
-        "$PYTHON_EXEC" "/work/labs/workon/workon/workon.py" "$@" --default_path="$cwd" \
+        "$PYTHON_EXEC" -m "workon.workon" "$@" --default_path="$cwd" \
     )
     result=$?
 
