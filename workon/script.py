@@ -103,7 +103,9 @@ class WorkOn(object):
             return
 
         for project in projects:
-            print('- ', self._PROJECT_ITEM.format(project.name, project.path))
+            project_repr = self._PROJECT_ITEM.format(project.name, project.path)
+            row = '- {}'.format(self._PROJECT_ITEM.format(project.name, project.path))
+            six.print_(row)
 
     def on(self, name, **kwargs):
         project = self._get_project_by_name(name)
