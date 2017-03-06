@@ -1,8 +1,8 @@
 from setuptools import setup
 
 setup(
-    name='Work On',
-    version='1.0.0',
+    name='Workon',
+    version='0.5.0',
     description='Switch between projects quickly from command line',
     long_description='...',
     keywords='terminal side projects manager work cli',
