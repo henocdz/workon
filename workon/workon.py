@@ -6,7 +6,7 @@ import fire
 
 from peewee import IntegrityError
 
-from database import db_path, setup, Project
+from .database import db_path, setup, Project
 
 
 class WorkOn(object):
