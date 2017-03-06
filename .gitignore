@@ -78,6 +78,9 @@ celerybeat-schedule
 # dotenv
 .env
 
+# dotdb
+*.db
+
 # virtualenv
 venv/
 ENV/
@@ -87,3 +90,7 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+
+# OS specific
+.DS_Store
